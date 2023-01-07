@@ -307,9 +307,9 @@ function Home1() {
                 <div className="category-slider arrow-slider">
                   <Slider {...settings}>
                     <div>
-                      <div className="shop-category-box border-0 wow fadeIn">
+                      <div className="shop-category-box border-0 wow fadeIn" style={{ "backgroundImage": `url(${category1})`}}> 
                         <a href="shop-left-sidebar.html" className="circle-1">
-                          <img src={category1} className="img-fluid  lazyload" alt />
+                          {/* <img src={category1} className="img-fluid  lazyload"  /> */}
                         </a>
                         <div className="category-name">
                           <h6>Oils, Rofined &amp; Ghee</h6>
@@ -413,6 +413,7 @@ function Home1() {
               <div className="col-12">
                 <div className="three-slider arrow-slider ratio_65">
                   <Slider {...settings1}>
+                
                     <div>
                       <div className="offer-banner hover-effect" >
                         <img src={value1} className="img-fluid bg-img  lazyload" alt />
@@ -425,6 +426,8 @@ function Home1() {
                         </div>
                       </div>
                     </div>
+             
+             
                     <div>
                       <div className="offer-banner hover-effect">
                         <img src={value2} className="img-fluid bg-img  lazyload" alt />
@@ -437,6 +440,7 @@ function Home1() {
                         </div>
                       </div>
                     </div>
+              
                     <div>
                       <div className="offer-banner hover-effect">
                         <img src={value3} className="img-fluid bg-img  lazyload" alt />
@@ -449,6 +453,7 @@ function Home1() {
                         </div>
                       </div>
                     </div>
+            
                     <div>
                       <div className="offer-banner hover-effect">
                         <img src={value1} className="img-fluid bg-img  lazyload" alt />
@@ -462,6 +467,7 @@ function Home1() {
                         </div>
                       </div>
                     </div>
+              
                   </Slider>
                 </div>
               </div>
