@@ -1,0 +1,50 @@
+element {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll; 
+}
+
+element::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
+a{
+  text-decoration: none !important;
+}
+
+.checked21 {
+  color: orange;
+}
+.rating{
+padding-left: 0rem;
+}
+
+/* 
+
+
+*[title]:hover::before {
+  content: attr(data-title);
+  position: absolute;
+  bottom: -26px;
+  display: inline-block;
+  padding: 3px 6px;
+  border-radius: 2px;
+  background: rgb(94, 205, 236);
+  color: #fff;
+  font-size: 12px;
+  font-family: sans-serif;
+  white-space: nowrap;
+}
+*[title]:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 8px;
+  display: inline-block;
+  color: #fff;
+  border: 8px solid transparent;	
+  border-bottom: 8px solid rgb(67, 225, 237);
+} */
