@@ -1,5 +1,5 @@
 "use strict";
-require("./app/utils/mongooseConnecter.util");
+require('./app/utils/mongooseConnecter.util')
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
+app.get("/home", (req, res) => res.send("Welcome every one...."));
 
 
 
@@ -45,6 +46,7 @@ const file = req.files.photo;
 
 
 // Routes Or API's
+app.use(require("./app/routes/Login/Login.route"));
 app.use("/seller", require("./app/routes/Sellers/Product.route"));
 
 

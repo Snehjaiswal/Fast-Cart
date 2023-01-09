@@ -1,3 +1,4 @@
+
 "use strict"
 
 const { Schema, model } = require('mongoose');
@@ -22,6 +23,7 @@ const LoginSchema = Schema({
         type: String,
         required: true
     },
+  
     otp: "",
     expires: "",
     isVerifyed: Boolean,

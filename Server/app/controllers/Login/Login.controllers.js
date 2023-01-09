@@ -1,18 +1,34 @@
+/*
+ * Title:   Login System Advanced 
+ * Author:     Sneh Jaiswal
+ * Created On: Fri Jun 17 2022 10:50:45 am
+ */
+
+
 "use strict";
+
+const LoginModel = require("../../models/Login/Login.model");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const uuid = require("uuid").v4;
+
+const sendMail = require("../../utils/Sendemail.utils");
+const OtpUtil = require("../../utils/Otp.utils")
+const multer = require('multer')
+var upload = multer({ dest: 'uploadimage' })
+
 
 const express = require("express");
 const router = express.Router();
-const uuid = require("uuid").v4;
-
-// Product CLASS
-class Product {
+// LOGIN CLASS
+class Login {
     async signup(req, res) {
 
         try {
-            const { Name, email, password, cpassword } = req.body;
+            const { Name, email, password } = req.body;
             console.log(req.body);
             // CHECK ALL FIELD IN FILL
-            if (!Name || !email || !password || !cpassword)
+            if (!Name || !email || !password)
                 return res.send({ msg: "Please fill in all fields." });
 
 
@@ -36,7 +52,6 @@ class Product {
 
             //Hash password
             const passwordHash = await bcrypt.hash(password, 10);
-            const cpasswordHash = await bcrypt.hash(cpassword, 10);
 
             // It's help Otp generater
             const { otp, expires } = await OtpUtil.generateOTP(email);
@@ -45,14 +60,13 @@ class Product {
             const url = ` OTP: ${otp} `; //url for email
 
             // it's help send mail
-            // sendMail.sendVerificationMail(email, url, "Verify your email address");
+            sendMail.sendVerificationMail(email, url, "Verify your email address");
 
             // it's help save data in db
             const newUser = new LoginModel({
                 Name,
                 email,
                 password: passwordHash,
-                cpassword: cpasswordHash,
                 isVerifyed: false,
                 otp,
                 expires,
@@ -119,34 +133,7 @@ class Product {
         }
 
     }
-    // upload image using multer
-    async upload2(req, res) {
-        console.log('call api');
-        res.json({ message: 'uploaded' })
-    }
-
-    async multi_upload(req, res) {
-        multi_upload1(req, res, function (err) {
-            if (err instanceof multer.MulterError) {
-                // A Multer error occurred when uploading.
-                res.status(500).send({ error: { message: `Multer uploading error: ${err.message}` } }).end();
-                return;
-            } else if (err) {
-                // An unknown error occurred when uploading.
-                if (err.name == 'ExtensionError') {
-                    res.status(413).send({ error: { message: err.message } }).end();
-                } else {
-                    res.status(500).send({ error: { message: `unknown uploading error: ${err.message}` } }).end();
-                }
-                return;
-            }
-
-            // Everything went fine.
-            // show file `req.files`
-            // show body `req.body`
-            res.status(200).end('Your files uploaded.');
-        })
-    }
+ 
     // student signin information
     async signin(req, res) {
         try {
@@ -210,7 +197,11 @@ class Product {
 
 
 }
-
-
+// // email validation
+function validateEmail(email) {
+    const re =
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 
 module.exports = new Login();
