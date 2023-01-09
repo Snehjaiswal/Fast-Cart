@@ -212,12 +212,12 @@ class Login {
 
             if (result == true) {
 
-                const updatePassword = LoginModel.findOneAndUpdate({ email: email }, { $set: { password: passwordHash } })
+                const updatePassword = LoginModel.findOneAndUpdate({ email: email }, { password: passwordHash })
                     .then(() => {
                         console.log("updatePassword", updatePassword)
-                        console.log("successfully Update!");
+
                         res.send({ msg: "successfully Update!" });
-                        res
+                    
                     }).catch((err) => {
                         console.log(err);
                     })
