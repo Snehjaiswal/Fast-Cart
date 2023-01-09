@@ -103,13 +103,13 @@ class Login {
         // CHECK OTP  EXPIRE IS VALID OR NOT
         const now = Date.now();
         if (now > + isValid.expires) {
-            res.send({
+            return res.send({
                 verification: false,
                 msg: "OTP Expired!",
             })
         }
 
-        console.log("otp", otp);
+        // console.log("otp", otp);
 
         if (otp == isValid.otp) {
 
@@ -133,7 +133,7 @@ class Login {
         }
 
     }
- 
+
     // student signin information
     async signin(req, res) {
         try {
@@ -147,22 +147,30 @@ class Login {
                 ]
             });
 
+
             //  CHECK EMAIL IS VALID OR NOT
             if (!user)
                 return res.send({ msg: "This email in not Valid." });
 
-            if (user.isVerifyed == false)
+            if (user.isVerifyed == false) {
+
                 return res.send({ msg: "This email in not Verified." });
+            }
 
-            const isMatch = await bcrypt.compare(password, user.password);
-            if ((user.email === email) && !isMatch)
+            if (user.email != email) {
+                return res.send({ msg: "Email is not valid!" });
+            }
 
-                return res.send({ msg: "Email or password is not valid." });
 
+            await bcrypt.compare(password, user.password).then(function (result) {
+                console.log("result", result);
+                if (result != true) {
+                    res.send({ msg: "Password Not match!" });
+                }
+            })
 
             // Genwrate JWT Token
-            const token = jwt.sign({ userID: user._id, email: email },
-                'checkthisissecretkey', { expiresIn: '1d' })
+            const token = jwt.sign({ userID: user._id, email: email }, 'checkthisissecretkey', { expiresIn: '1d' })
 
 
             res.send({ msg: "Login success!", "token": token, "status": "success", data: user });
@@ -171,27 +179,51 @@ class Login {
             console.log(`Login Success!`);
 
 
+
+
+
+
+
+
+
+
         } catch (err) {
             return res.send({ msg: err.message });
         }
     }
 
+
+
+
     // Change password
     async changePassword(req, res) {
 
-        const { password, cpassword } = req.body;
-        if (password && cpassword) {
-            if (password !== cpassword) {
-                res.send({ "status": "faild", msg: "New password and confirm password dosn't match" })
-            } else {
-                //Hash password
-                const passwordHash = await bcrypt.hash(password, 10);
-                const cpasswordHash = await bcrypt.hash(cpassword, 10);
+        const { email, oldpassword, password } = req.body;
 
+
+        const user = await LoginModel.findOne({ email: email });
+        // console.log({ user });
+
+        const passwordHash = await bcrypt.hash(oldpassword, 10);
+        console.log("passwordHash", passwordHash);
+        // Load hash from your password DB.
+        bcrypt.compare(oldpassword, user.password).then(function (result) {
+            // console.log("result", result);
+
+            if (result == true) {
+
+                const updatePassword = LoginModel.findOneAndUpdate({ email: email }, { $set: { password: passwordHash } })
+                    .then(() => {
+                        console.log("updatePassword", updatePassword)
+                        console.log("successfully Update!");
+                        res.send({ msg: "successfully Update!" });
+                        res
+                    }).catch((err) => {
+                        console.log(err);
+                    })
             }
-        } else {
-            res.senD({ "status": "failed", msg: "All feild are reqired" })
-        }
+
+        });
     }
 
 

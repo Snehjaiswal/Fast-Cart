@@ -128,7 +128,7 @@ function Home1() {
 
   const settings = {
     infinite: true,
-    speed: 4000,
+    speed: 1000,
     slidesToShow: 4,
     slidesToScroll: 2,
     autoplay: true,
