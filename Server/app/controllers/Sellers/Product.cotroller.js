@@ -19,21 +19,26 @@ class Product {
 
 
     async add_product(req, res) {
-   
-        const { Product_Name,Product_Price, Product_Qty,  Seller_Id } = req.body;
-        const ProductImg = req.files.photo;
+// console.log("Product_Name",re);
+        const { Product_Name, Product_Price, Seller_Id } = req.body;
+        const Product_Img = req.files.photo;
         // CHECK ALL FIELD IN FILL
-    const ImagesArr = []
+
+        console.log(Product_Img);
+        // console.log(Product_Name, Product_Price, Seller_Id);
+        const ImagesArr = []
+
+        return
 
         cloudinary.uploader.upload(ProductImg.tempFilePath, (err, result) => {
             // ImagesArr.push(result)
-            
-            
+
+
             // it's help save data in db
             const Product = new LoginModel({
                 Product_Name,
-                Product_Qty, 
-                Product_Price, 
+                Product_Qty,
+                Product_Price,
                 Seller_Id,
                 // file,
             });
@@ -45,7 +50,7 @@ class Product {
 
         res.send({ msg: "Success fullt upload" });
 
-    
+
     }
 
 

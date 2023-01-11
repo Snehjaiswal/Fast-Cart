@@ -306,16 +306,21 @@ function Home1() {
               <div className="col-12">
                 <div className="category-slider arrow-slider">
                   <Slider {...settings}>
+                  
                     <div>
-                      <div className="shop-category-box border-0 wow fadeIn" style={{ "backgroundImage": `url(${category1})`}}> 
+                      <div className="shop-category-box border-0 wow fadeIn" > 
                         <a href="shop-left-sidebar.html" className="circle-1">
-                          {/* <img src={category1} className="img-fluid  lazyload"  /> */}
+                         <img src={category1} className="img-fluid  lazyload"  /> 
                         </a>
                         <div className="category-name">
                           <h6>Oils, Rofined &amp; Ghee</h6>
                         </div>
                       </div>
                     </div>
+
+
+
+
                     <div>
                       <div className="shop-category-box border-0 wow fadeIn" >
                         <a href="shop-left-sidebar.html" className="circle-2">

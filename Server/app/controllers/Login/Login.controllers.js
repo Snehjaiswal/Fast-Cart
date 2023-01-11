@@ -55,7 +55,7 @@ class Login {
 
             // It's help Otp generater
             const { otp, expires } = await OtpUtil.generateOTP(email);
-            // console.log({ otp, expires })
+            console.log({ otp, expires })
 
             const url = ` OTP: ${otp} `; //url for email
 
@@ -202,13 +202,13 @@ class Login {
 
 
         const user = await LoginModel.findOne({ email: email });
-        // console.log({ user });
+        console.log({ user });
 
-        const passwordHash = await bcrypt.hash(oldpassword, 10);
-        console.log("passwordHash", passwordHash);
+        const passwordHash = await bcrypt.hash(password, 10);
+        // console.log("passwordHash", passwordHash);
         // Load hash from your password DB.
         bcrypt.compare(oldpassword, user.password).then(function (result) {
-            // console.log("result", result);
+            console.log("result", result);
 
             if (result == true) {
 

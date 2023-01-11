@@ -64,6 +64,7 @@ var transporter = nodemailer.createTransport({
 
 function sendVerificationMail(to, url, text) {
   console.log("to",to);
+  console.log("url",url);
   const mailOptions = {
     from: 'snehjaiswal704951@gmail.com',
     to: to,

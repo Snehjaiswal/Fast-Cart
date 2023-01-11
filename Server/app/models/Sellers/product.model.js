@@ -23,10 +23,7 @@ const ProductSchema = Schema({
         type: Number,
         required: true
     },
-    Product_Id: {
-        type: Number,
-        required: true
-    },
+   
     Seller_Id: {
         type: Number
     },
